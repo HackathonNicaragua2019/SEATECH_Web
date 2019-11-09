@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Carreras</title>
+    </h:head>
+    <h:body>
+        <h:form id="vistamodulos">
+            <p:messages/>
+            <p:panel style="text-align: center" >
+
+                <h:panelGrid columns="4" >
+                    <p:outputLabel value="Año ofertado de la carrera:"/>
+                    <p:inputText value="#{modulosController.vigencia}"/>
+                    <h:commandButton value="Cargar Carreras" actionListener="#{modulosController.vercarreras()}"/>
+                    <p:selectOneMenu value="#{modulosController.idc}">
+                        <f:selectItems value="#{modulosController.lcarreras}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Nombre del módulo:" />
+                    <p:inputText value="#{modulosController.nombre}"  />
+                    <p:outputLabel value="Horas:" />
+                    <p:inputText value="#{modulosController.horas}"/>
+                    <p:outputLabel value="Semestre:" />
+                    <p:inputText value="#{modulosController.semestre}"/>
+
+                    <p:selectOneMenu value="#{modulosController.tipo}">
+                        <f:selectItem itemLabel=" " itemValue=""/>
+                        <f:selectItem itemLabel="Técnico operativo"  itemValue="Tecop"/>
+                        <f:selectItem itemLabel="Tranversal" itemValue="Tranv"/>
+                        <f:selectItem itemLabel="Técnico Administrativo" itemValue="TecAdm"/>
+                        <f:selectItem itemLabel="Técnico básico" itemValue="Basicos"/>
+                    </p:selectOneMenu>
+                    <p:column/>
+                    <h:commandButton value="Agregar" actionListener="#{modulosController.agregar()}"/>
+                    
+                </h:panelGrid>
+
+            </p:panel>
+            <p:separator/>
+
+        </h:form>
+        
+    </h:body>
+</html>
