@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Carreras</title>
+    </h:head>
+    <h:body>
+        <h:form id="vistacarreras">
+            <p:messages/>
+            <p:panel style="text-align: center" >
+                <h:panelGrid columns="4" >
+                <p:outputLabel value="Nombre Completo de la Carrera:" />
+                <p:inputText value="#{carrerasController.nombre}"  />
+                <p:outputLabel value="Año Lectivo:" />
+                <p:inputText value="#{carrerasController.vig}"/>
+                <p:column/>
+                <h:commandButton value="Agregar" actionListener="#{carrerasController.agregar()}"/>
+                </h:panelGrid>
+            </p:panel>
+            <p:separator/>
+            <p:panel style=" text-align: center">
+                <h:commandButton value="Ver Carreras" actionListener="#{carrerasController.consultar()}"/>
+             
+                     <p:dataTable id="tblcarreras" var="c" value="#{carrerasController.lcarreras}" 
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                     paginator="true" rows="5" style="margin-bottom:20px">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="No." />
+                                </f:facet>
+                                <h:outputText value="#{c.idc}" />
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre" />
+                                </f:facet>
+                                <h:outputText value="#{c.nombre}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Vigencia"/>
+                                </f:facet>
+                                <h:outputText value="#{c.vigencia}" />
+                            </p:column>
+                            
+                            <p:column style="text-align: center" headerText="Editar Carrera">
+                                 <p:commandButton update=":vistacarreras:car" oncomplete="PF('carrera').show()" icon="ui-icon-pencil" >
+                                     <f:setPropertyActionListener value="#{c}" target="#{carrerasController.datos}" />
+                                 </p:commandButton>
+                             </p:column> 
+                            
+                                
+                        </p:dataTable>
+            </p:panel>
+                
+                  <p:dialog header="¿ Desea editar esta carrera ?" widgetVar="carrera" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="car" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty carrerasController.datos}" columnClasses="label,value">
+
+                                <h:outputText value="ID:" />
+                                <h:outputText value="#{carrerasController.datos.idc}" />
+                                
+                                <h:outputText value="NOTA:" />
+                                <h:inputText value="#{carrerasController.datos.nombre}" />
+                                
+                                <h:commandButton value="Actualizar" actionListener="#{carrerasController.editar()}" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+        </h:form>
+        
+    </h:body>
+</html>
