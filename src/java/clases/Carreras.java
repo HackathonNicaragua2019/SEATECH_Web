@@ -3,12 +3,48 @@ package clases;
 
 /**
  *
- * @author AULANO1
+ * @author SERGIO C... 
  */
 public class Carreras {
     private int idc;
     private String nombre;
     private String vigencia;
+    private int horas;
+    private String tipo;
+    private int semestre;
+    private int idm;
+
+    public int getHoras() {
+        return horas;
+    }
+
+    public void setHoras(int horas) {
+        this.horas = horas;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
+    }
+
+    public int getIdm() {
+        return idm;
+    }
+
+    public void setIdm(int idm) {
+        this.idm = idm;
+    }
 
     public int getIdc() {
         return idc;
