@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Notas</title>
+    </h:head>
+    <h:body>
+        <h:form id="vistanotas">
+            <p:panel>
+                <h:panelGrid columns="2">
+                    <p:selectOneMenu id="notasv" value="#{notasController.vigencia}">
+                        <f:selectItem itemLabel="Año lectivo" />
+                        <f:selectItem itemLabel="2019" itemValue="2019"/>
+                        <p:ajax listener="#{notasController.vercarreras()}" process="vistanotas:notasv" update="vistanotas:notasc"/>
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="notasc" value="#{notasController.idc}">
+                        <f:selectItem itemLabel="Carreras" />
+                        <f:selectItems value="#{notasController.lcarrera}"/>
+                        <p:ajax listener="#{notasController.vergrupos()}" process="vistanotas:notasc" update="vistanotas:notasg"/>
+                    </p:selectOneMenu>
+                
+                    <p:selectOneMenu id="notasg" value="#{notasController.idg}">
+                        <f:selectItem itemLabel="Grupos" />
+                        <f:selectItems value="#{notasController.lgrupos}"/>
+                        <p:ajax listener="#{notasController.vermodulos()}" process="vistanotas:notasg" update="vistanotas:notasm"/>
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="notasm" value="#{notasController.idm}">
+                        <f:selectItem itemLabel="Modulos" />
+                        <f:selectItems value="#{notasController.lmodulos}"/>
+                        <p:ajax listener="#{notasController.veractividades()}" process="vistanotas:notasm" update="vistanotas:notasact"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                
+                   <p:selectOneMenu id="notasact" value="#{notasController.idact}">
+                        <f:selectItem itemLabel="Actividades" />
+                        <f:selectItems value="#{notasController.lactividades}"/>
+                        <p:ajax listener="#{notasController.lestudiantes()}" process="vistanotas:notasact" update="vistanotas:notasest"/>
+                    </p:selectOneMenu>
+                
+                   <p:selectOneMenu id="notasest" value="#{notasController.ida}">
+                        <f:selectItem itemLabel="Estudiantes" />
+                        <f:selectItems value="#{notasController.listaestudiantes}"/>
+                        
+                    </p:selectOneMenu>
+                
+            </p:panel>
+            
+            <p:panel >
+                
+                <p:separator/>
+                
+                <h:commandButton value="Ver Criterios" actionListener="#{notasController.lcriterios()}"/>
+                
+                <p:dataTable id="tblcriterios" var="criterios" value ="#{notasController.listacriterios}" editable="true" editMode="cell"
+                                             widgetVar="cellCars">
+                                    <p:column headerText="No.">
+                                        <p:outputLabel value="#{criterios.idcr}"/>
+                                    </p:column>
+                                    <p:column headerText="Criterio">
+                                        <p:outputLabel value="#{criterios.criterio}"/>
+                                    </p:column>
+                                    <p:column headerText="Nota" >
+                                        <p:cellEditor>
+                                            <f:facet name="output"><p:inputText value="#{criterios.nota}"/> </f:facet>
+                                            <f:facet name="input"><p:inputText value="#{criterios.nota}"  /> </f:facet>
+                                        </p:cellEditor>
+                                        
+                                    </p:column>
+                    
+                                </p:dataTable>
+                <h:commandButton value="guardar" actionListener="#{notasController.agregarnota()}"/>
+            </p:panel>
+       
+        </h:form>
+        
+    </h:body>
+</html>
+

@@ -168,7 +168,7 @@ public class ActividadesController implements Serializable{
                c.cerrarConexion();
             }
         }
-        System.out.println("aqui todo bien peluche");
+        
         c.cerrarConexion();
     }
     
