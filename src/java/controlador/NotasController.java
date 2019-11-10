@@ -1,9 +1,6 @@
 
 package controlador;
 
-
-
-import clases.Carreras;
 import clases.ConexionOracle;
 import clases.Notas;
 import java.io.Serializable;
@@ -297,40 +294,38 @@ public class NotasController implements Serializable{
         c.cerrarConexion();
     }
     
-    public void agregarnota(){
-        
-       c.abrirConexion();
-       int mayor = 0;
+    public void agregarnota() {
+
+        int mayor = 0;
         int num;
         c.abrirConexion();
-        
-        ResultSet resultado = c.consultar("select idn from notas ");       
-         if (resultado != null) {
-            try {
-                while (resultado.next()) {
-                    num = resultado.getInt("idn");
-                    if(mayor > num )
-                    mayor = mayor;
-                    else
-                    mayor = num;
-                    
+        fecha = cargarf();
+        Iterator it = listacriterios.iterator();
+        while (it.hasNext()) {
+            datos = (Notas) it.next();
+            ResultSet resultado = c.consultar("select idn from notas ");
+            if (resultado != null) {
+                try {
+                    while (resultado.next()) {
+                        num = resultado.getInt("idn");
+                        if (mayor > num) {
+                            mayor = mayor;
+                        } else {
+                            mayor = num;
+                        }
+
+                    }
+                    resultado.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("ERROR .. en  calcular idn ");
+                    c.cerrarConexion();
                 }
-                resultado.close();
-            }catch(Exception e) {
-                e.printStackTrace();
-                System.out.println("ERROR .. en  calcular idn ");
-                c.cerrarConexion();
+                idn = mayor + 1;
+                c.insertar("insert into notas (idn, fecha, idcr, ida,nota,idact) values (" + getIdn() + ", '" + getFecha() + "', " + datos.getIdcr() + "," + getIda() + ", " + datos.getNota() + "," + getIdact() + ")");
             }
-            idn = mayor + 1;
-            fecha = cargarf();
-       /* Iterator it = listacriterios.iterator();
-        while(it.hasNext()){
-            datos = (Notas)it.next();
-            
-         c.insertar("insert into notas (idn, fecha, idcr, ida,nota,idact) values ("+getIdn()+", '"+getFecha()+"', "+datos.getIdcr()+","+getIda()+", "+datos.getNota()+","+getIdact()+")");*/
-        //}
         }
-         c.cerrarConexion();
+        c.cerrarConexion();
     }
     
     private String cargarf(){
