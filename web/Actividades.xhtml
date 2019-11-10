@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Carreras</title>
+    </h:head>
+    <h:body>
+        <h:form id="vistactividades">
+            
+                    <p:messages/>
+              <p:panel style="text-align: center">
+                <h:panelGrid columns="2">
+                    <p:selectOneMenu id="lec" value="#{actividadesController.vigencia}">
+                        <f:selectItem itemLabel="Año lectivo" />
+                        <f:selectItem itemLabel="2019" itemValue="2019"/>
+                        <p:ajax listener="#{actividadesController.vercarreras()}" process="vistactividades:lec" update="vistactividades:carr"/>
+                    </p:selectOneMenu>
+                    
+                  <p:selectOneMenu id="carr" value="#{actividadesController.idc}">
+                        <f:selectItem itemLabel="Carreras" />
+                        <f:selectItems value="#{actividadesController.lcarrera}"/>
+                       <p:ajax listener="#{actividadesController.vermodulos()}" process="vistactividades:carr" update="vistactividades:modd"/>
+                    </p:selectOneMenu>
+                
+                    <p:selectOneMenu id="modd" value="#{actividadesController.idm}">
+                        <f:selectItem itemLabel="Modulos" />
+                        <f:selectItems value="#{actividadesController.lmodulos}"/>
+                      <p:ajax listener="#{actividadesController.verunidades()}" process="vistactividades:modd" update="vistactividades:act"/>
+                    </p:selectOneMenu>
+                
+                   <p:selectOneMenu id="act" value="#{actividadesController.idun}">
+                        <f:selectItem itemLabel="Modulos" />
+                        <f:selectItems value="#{actividadesController.lunidades}"/>
+                    </p:selectOneMenu>
+                
+                 <p:outputLabel value="Nombre de la Actividad:" />
+                 <p:inputText value="#{actividadesController.nombre}"  />
+                    <p:outputLabel value="Puntaje:" />
+                    <p:inputText value="#{actividadesController.puntaje}"/>
+                    <p:outputLabel value="Año Lectivo:" />
+                    <p:inputText value="#{actividadesController.lectivo}"/>
+                    <p:outputLabel value="Semestre:" />
+                    <p:inputText value="#{actividadesController.semestre}"/>
+                    
+                    <p:outputLabel value="Esta actividad se califica:" />
+                    <p:selectOneRadio value="#{actividadesController.calificada}">
+                        <f:selectItem itemLabel="Si" itemValue="1"/>
+                        <f:selectItem itemLabel="No" itemValue="2"/>
+                    </p:selectOneRadio>
+                    
+                    <p:column/>
+                 <h:commandButton value="Agregar Actividad" actionListener="#{actividadesController.agregar()}"/>
+                   
+                </h:panelGrid>
+            </p:panel>
+     
+        
+        </h:form>
+        
+    </h:body>
+</html>
