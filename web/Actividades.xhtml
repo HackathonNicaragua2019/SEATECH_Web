@@ -16,6 +16,8 @@
         <p:menuitem value="Agregar Criterios" url="Criterios.xhtml" />
         <p:menuitem value="Agregar Notas" url="Notas.xhtml" />
         <p:menuitem value="Consultar Notas" url="ConsultarNotas.xhtml" />
+        <p:menuitem value="Agregar Grupo" url="Alumnos.xhtml" />
+        <p:menuitem value="Estudiantes" url="Estudiantes.xhtml" />
     </p:menubar>
         </h:form>
     </h:head>
@@ -44,7 +46,7 @@
                     </p:selectOneMenu>
                 
                    <p:selectOneMenu id="act" value="#{actividadesController.idun}">
-                        <f:selectItem itemLabel="Modulos" />
+                        <f:selectItem itemLabel="Actividades" />
                         <f:selectItems value="#{actividadesController.lunidades}"/>
                     </p:selectOneMenu>
                 
