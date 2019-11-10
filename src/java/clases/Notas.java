@@ -10,6 +10,15 @@ public class Notas {
     private int idcr;
     private String nombre;
     private String criterio;
+    private int suma;
+
+    public int getSuma() {
+        return suma;
+    }
+
+    public void setSuma(int suma) {
+        this.suma = suma;
+    }
 
     public int getNota() {
         return nota;
