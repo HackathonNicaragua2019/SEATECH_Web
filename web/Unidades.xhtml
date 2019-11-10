@@ -39,6 +39,67 @@
                     
                 </h:panelGrid>
               </p:panel>
+            
+            <p:panel style="text-align: center">
+                
+                <h:commandButton value="Ver Unidades" actionListener="#{unidadesController.consultar()}"/>
+             
+                <p:dataTable id="tblunidad" var="u" value="#{unidadesController.lunidad}" 
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                     paginator="true" rows="5" style="margin-bottom:20px">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="No." />
+                                </f:facet>
+                                <h:outputText value="#{u.idc}" />
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre" />
+                                </f:facet>
+                                <h:outputText value="#{u.nombre}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Numero"/>
+                                </f:facet>
+                                <h:outputText value="#{u.vigencia}" />
+                            </p:column>
+                    
+                           <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Ponderacion"/>
+                                </f:facet>
+                               <h:outputText value="#{u.semestre}" />
+                            </p:column>
+                            
+                            <p:column style="text-align: center" headerText="Eliminar unidad">
+                                 <p:commandButton update=":vistaunidades:uni" oncomplete="PF('unidad').show()" icon="ui-icon-pencil" >
+                                     <f:setPropertyActionListener value="#{u}" target="#{unidadesController.datos}" />
+                                 </p:commandButton>
+                             </p:column> 
+                            
+                                
+                        </p:dataTable>
+            </p:panel>
+            
+            <p:dialog header="¿ Desea eliminar esta unidad ?" widgetVar="unidad" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="uni" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty unidadesController.datos}" columnClasses="label,value">
+
+                                <h:outputText value="ID:" />
+                                <h:outputText value="#{unidadesController.datos.idc}" />
+                                
+                                <h:outputText value="NOMBRE" />
+                                <h:inputText value="#{unidadesController.datos.nombre}" />
+                                
+                                <h:commandButton value="Actualizar" actionListener="#{unidadesController.eliminar()}" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
         </h:form>
         
     </h:body>

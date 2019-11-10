@@ -2,6 +2,7 @@
 package controlador;
 
 
+import clases.Carreras;
 import clases.ConexionOracle;
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -27,10 +28,31 @@ public class UnidadesController implements Serializable{
     private ArrayList<SelectItem> lcarreras = new ArrayList<>();
     ArrayList<SelectItem> lmodulos = new ArrayList<>();
     private String vigencia;
+    private Carreras datos = new Carreras();
     
-     public UnidadesController() {
+    public UnidadesController() {
         
     }
+    
+    public Carreras getDatos() {
+        return datos;
+    }
+
+    public void setDatos(Carreras datos) {
+        this.datos = datos;
+    }
+    private ArrayList<Carreras> lunidad = new ArrayList<>();
+    
+
+    public ArrayList<Carreras> getLunidad() {
+        return lunidad;
+    }
+
+    public void setLunidad(ArrayList<Carreras> lunidad) {
+        this.lunidad = lunidad;
+    }
+    
+     
 
     public ArrayList<SelectItem> getLcarreras() {
         return lcarreras;
@@ -171,4 +193,35 @@ public class UnidadesController implements Serializable{
         c.insertar("insert into unidades (idun, nombre, numero, ponderacion, idm) values ("+getIdu()+", '"+getNombre()+"', "+getNumero()+", "+getPonderacion()+", "+getIdm()+")");
         c.cerrarConexion(); 
     }
+    
+    public void consultar(){
+        lunidad.clear();
+        c.abrirConexion();
+        ResultSet r = c.consultar("select idun,nombre,numero,ponderacion from unidades where idm = "+getIdm()+"");
+        if (r!= null) {
+            try {
+                while (r.next()) {                    
+                    datos = new Carreras();
+                    datos.setIdc(r.getInt("idun"));
+                    datos.setNombre(r.getString("nombre"));
+                    datos.setVigencia(r.getString("numero"));
+                    datos.setSemestre(r.getInt("ponderacion"));
+                    lunidad.add(datos);
+                }
+                r.close();
+            } catch (Exception e) {
+               e.printStackTrace();
+               c.cerrarConexion();
+            }
+        }
+        c.cerrarConexion();
+    }
+    
+    public void eliminar(){
+        c.abrirConexion();
+        c.insertar("delete unidades where idun = "+datos.getIdc()+"");
+        c.cerrarConexion();
+        
+    }
+            
 }
