@@ -6,6 +6,22 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Carreras</title>
+        <h:form>  
+    <p:growl id="messages"/>
+ 
+    
+    <p:menubar>
+
+        <p:menuitem value="Agregar Modulos" url="Modulos.xhtml" />
+        <p:menuitem value="Editar Modulos" url="EditarModulos.xhtml" />
+        <p:menuitem value="Agregar Unidades" url="Unidades.xhtml" />
+        <p:menuitem value="Agregar Actividades" url="Actividades.xhtml" />
+        <p:menuitem value="Agregar Criterios" url="Criterios.xhtml" />
+        <p:menuitem value="Agregar Notas" url="Notas.xhtml" />
+        <p:menuitem value="Consultar Notas" url="ConsultarNotas.xhtml" />
+    </p:menubar>
+    
+        </h:form>
     </h:head>
     <h:body>
         <h:form id="vistacarreras">
@@ -16,7 +32,7 @@
                 <p:inputText value="#{carrerasController.nombre}"  />
                 <p:outputLabel value="Año Lectivo:" />
                 <p:inputText value="#{carrerasController.vig}"/>
-                <p:column/>
+                <p:column/><p:column/>
                 <h:commandButton value="Agregar" actionListener="#{carrerasController.agregar()}"/>
                 </h:panelGrid>
             </p:panel>
