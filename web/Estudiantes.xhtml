@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Carreras</title>
+    </h:head>
+    <h:body>
+        <h:form id="vistaestudiantes">
+            
+                    <p:messages/>
+              <p:panel style="text-align: center">
+                <h:panelGrid columns="2">
+                    <p:selectOneMenu id="vigenc" value="#{alumnoscontroller.vigencia}">
+                        <f:selectItem itemLabel="Año lectivo" />
+                        <f:selectItem itemLabel="2019" itemValue="2019"/>
+                        <p:ajax listener="#{alumnoscontroller.vercarreras()}" process="vistaestudiantes:vigenc" update="vistaestudiantes:crs"/>
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="crs" value="#{alumnoscontroller.idc}">
+                        <f:selectItem itemLabel="Carreras" />
+                        <f:selectItems value="#{alumnoscontroller.lcarreras}"/>
+                      <p:ajax listener="#{alumnoscontroller.vergrupos()}" process="vistaestudiantes:crs" update="vistaestudiantes:grupos"/>
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="grupos" value="#{alumnoscontroller.idg}">
+                        <f:selectItem itemLabel="Grupos" />
+                        <f:selectItems value="#{alumnoscontroller.lgrupos}"/>
+                        
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel value="Nombre:" />
+                    <p:inputText value="#{alumnoscontroller.estudiante}"  />
+                    <p:outputLabel value="Carnet:" />
+                    <p:inputText value="#{alumnoscontroller.carnet}"  />
+                    
+                    <h:commandButton value="Guardar" actionListener="#{alumnoscontroller.guardarestudiantes()}"/>
+                    
+                </h:panelGrid>
+                  
+              </p:panel>
+                    
+        </h:form>
+    </h:body>
+</html>
