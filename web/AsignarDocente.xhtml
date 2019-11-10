@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Asignar Docentes</title>
+    </h:head>
+    <h:body>
+        <h:form id="vistadocentes">
+            
+                    <p:messages/>
+              <p:panel style="text-align: center">
+                <h:panelGrid columns="2">
+                    <p:selectOneMenu id="l" value="#{docenteController.vigencia}">
+                        <f:selectItem itemLabel="Año lectivo" />
+                        <f:selectItem itemLabel="2019" itemValue="2019"/>
+                        <p:ajax listener="#{docenteController.vercarreras()}" process="vistadocentes:l" update="vistadocentes:c"/>
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="c" value="#{docenteController.idc}">
+                        <f:selectItem itemLabel="Carreras" />
+                        <f:selectItems value="#{docenteController.lcarreras}"/>
+                        <p:ajax listener="#{docenteController.vermodulos()}" process="vistadocentes:c" update="vistadocentes:m"/>
+                    </p:selectOneMenu>
+                
+                    <p:selectOneMenu id="m" value="#{docenteController.idm}">
+                        <f:selectItem itemLabel="Modulos" />
+                        <f:selectItems value="#{docenteController.lmodulos}"/>
+                        <p:ajax listener="#{docenteController.vergrupos()}" process="vistadocentes:m" update="vistadocentes:gr"/>
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="gr" value="#{docenteController.idg}">
+                        <f:selectItem itemLabel="Grupos" />
+                        <f:selectItems value="#{docenteController.lgrupos}"/>
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="doc" value="#{docenteController.idma}">
+                        <f:selectItem itemLabel="Docentes" />
+                        <f:selectItems value="#{docenteController.lmaestros}"/>
+                    </p:selectOneMenu>
+                    
+                    <h:commandButton value="Asignar docente" actionListener="#{docenteController.asignardocente()}"/>
+                </h:panelGrid>
+              </p:panel>
+        </h:form>
+    </h:body>
+</html>
