@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Criterios</title>
+    </h:head>
+    <h:body>
+        <h:form id="vistacriterios">
+            
+                    <p:messages/>
+              <p:panel style="text-align: center">
+                <h:panelGrid columns="2">
+                    <p:selectOneMenu id="vig" value="#{criteriosController.vigencia}">
+                        <f:selectItem itemLabel="Año lectivo" />
+                        <f:selectItem itemLabel="2019" itemValue="2019"/>
+                        <p:ajax listener="#{criteriosController.vercarreras()}" process="vistacriterios:vig" update="vistacriterios:ca"/>
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="ca" value="#{criteriosController.idc}">
+                        <f:selectItem itemLabel="Carreras" />
+                        <f:selectItems value="#{criteriosController.lcarrera}"/>
+                        <p:ajax listener="#{criteriosController.vermodulos()}" process="vistacriterios:ca" update="vistacriterios:mo"/>
+                    </p:selectOneMenu>
+                
+                    <p:selectOneMenu id="mo" value="#{criteriosController.idm}">
+                        <f:selectItem itemLabel="Modulos" />
+                        <f:selectItems value="#{criteriosController.lmodulo}"/>
+                        <p:ajax listener="#{criteriosController.veractividades()}" process="vistacriterios:mo" update="vistacriterios:acti"/>
+                    </p:selectOneMenu>
+                
+                    <p:selectOneMenu id="acti" value="#{criteriosController.idact}">
+                        <f:selectItem itemLabel="Actividades" />
+                        <f:selectItems value="#{criteriosController.lactividades}"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel value="Nombre del criterio:" />
+                    <p:inputText value="#{criteriosController.nombre}"  />
+                    <p:outputLabel value="Puntaje:" />
+                    <p:inputText value="#{criteriosController.puntaje}"/>
+                    <h:commandButton value="Guardar" actionListener="#{criteriosController.guardar()}"/>
+                    
+                </h:panelGrid>
+              </p:panel>
+                    <p:separator/>
+                    <p:panel >
+                        <h:commandButton value="Ver criterios" actionListener="#{criteriosController.consultar()}"/>
+                        <p:separator/>
+                        <p:dataTable id="tblcriterios" var="cr" value="#{criteriosController.lcriterios}" 
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                     paginator="true" rows="5" style="margin-bottom:20px">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="No." />
+                                </f:facet>
+                                <h:outputText value="#{cr.idc}" />
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre" />
+                                </f:facet>
+                                <h:outputText value="#{cr.nombre}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Puntuación"/>
+                                </f:facet>
+                                <h:outputText value="#{cr.vigencia}" />
+                            </p:column>
+                            
+                            <p:column style="text-align: center" headerText="eliminar criterio">
+                                 <p:commandButton update=":vistacriterios:cris" oncomplete="PF('crit').show()" icon="ui-icon-pencil" >
+                                     <f:setPropertyActionListener value="#{cr}" target="#{criteriosController.datos}" />
+                                 </p:commandButton>
+                             </p:column> 
+                            
+                                
+                        </p:dataTable>
+                    </p:panel>
+                    
+                    <p:dialog header="¿ Desea eliminar el criterio ?" widgetVar="crit" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="cris" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty criteriosController.datos}" columnClasses="label,value">
+
+                                <h:outputText value="ID:" />
+                                <h:outputText value="#{criteriosController.datos.idc}" />
+                                
+                                <h:outputText value="NOMBRE" />
+                                <h:inputText value="#{criteriosController.datos.nombre}" />
+                                
+                                <h:commandButton value="Actualizar" actionListener="#{criteriosController.eliminar()}" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+        </h:form>
+    </h:body>
+</html>
